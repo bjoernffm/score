@@ -58,14 +58,14 @@ describe("Score", function() {
 
         it("should resolve 1 with the given rule", function() {
             rules = [{
-                condition: "views/(created|weeksUntilNow) > 100",
-                if_true: {
-                    method: "add",
-                    value: 1
+                "condition": "views/(created|weeksUntilNow) > 100",
+                "if_true": {
+                    "method": "add",
+                    "value": 1
                 },
-                if_false: {
-                    method: "idle",
-                    value: null
+                "if_false": {
+                    "method": "idle",
+                    "value": null
                 }
             }];
             return expect(score.calculate(rules, context)).to.eventually.equal(1);
@@ -73,24 +73,24 @@ describe("Score", function() {
 
         it("should resolve 3 with the given rules", function() {
             rules = [{
-                condition: "views/(created|weeksUntilNow) > 100",
-                if_true: {
-                    method: "add",
-                    value: 5
+                "condition": "views/(created|weeksUntilNow) > 100",
+                "if_true": {
+                    "method": "add",
+                    "value": 5
                 },
-                if_false: {
-                    method: "idle",
-                    value: null
+                "if_false": {
+                    "method": "idle",
+                    "value": null
                 }
             }, {
-                condition: "age > 100",
-                if_true: {
-                    method: "add",
-                    value: 2
+                "condition": "age > 100",
+                "if_true": {
+                    "method": "add",
+                    "value": 2
                 },
-                if_false: {
-                    method: "subtract",
-                    value: 2
+                "if_false": {
+                    "method": "subtract",
+                    "value": 2
                 }
             }];
             return expect(score.calculate(rules, context)).to.eventually.equal(3);
@@ -98,24 +98,24 @@ describe("Score", function() {
 
         it("should resolve 0 with the given rules", function() {
             rules = [{
-                condition: "views/(created|weeksUntilNow) > 100",
-                if_true: {
-                    method: "add",
-                    value: 5
+                "condition": "views/(created|weeksUntilNow) > 100",
+                "if_true": {
+                    "method": "add",
+                    "value": 5
                 },
-                if_false: {
-                    method: "idle",
-                    value: null
+                "if_false": {
+                    "method": "idle",
+                    "value": null
                 }
             }, {
-                condition: "age > 100",
-                if_true: {
-                    method: "add",
-                    value: 2
+                "condition": "age > 100",
+                "if_true": {
+                    "method": "add",
+                    "value": 2
                 },
-                if_false: {
-                    method: "break",
-                    value: null
+                "if_false": {
+                    "method": "break",
+                    "value": null
                 }
             }];
             return expect(score.calculate(rules, context)).to.eventually.equal(0);
@@ -123,24 +123,24 @@ describe("Score", function() {
 
         it("should resolve 0 with the given rules", function() {
             rules = [{
-                condition: "views/(created|weeksUntilNow) > 100",
-                if_true: {
-                    method: "break",
-                    value: null
+                "condition": "views/(created|weeksUntilNow) > 100",
+                "if_true": {
+                    "method": "break",
+                    "value": null
                 },
-                if_false: {
-                    method: "idle",
-                    value: null
+                "if_false": {
+                    "method": "idle",
+                    "value": null
                 }
             }, {
-                condition: "age > 100",
-                if_true: {
-                    method: "add",
-                    value: 2
+                "condition": "age > 100",
+                "if_true": {
+                    "method": "add",
+                    "value": 2
                 },
-                if_false: {
-                    method: "break",
-                    value: null
+                "if_false": {
+                    "method": "break",
+                    "value": null
                 }
             }];
             return expect(score.calculate(rules, context)).to.eventually.equal(0);
@@ -148,14 +148,14 @@ describe("Score", function() {
 
         it("should reject when wrong expression given", function() {
             rules = [{
-                condition: "views",
-                if_true: {
-                    method: "break",
-                    value: null
+                "condition": "views",
+                "if_true": {
+                    "method": "break",
+                    "value": null
                 },
-                if_false: {
-                    method: "idle",
-                    value: null
+                "if_false": {
+                    "method": "idle",
+                    "value": null
                 }
             }];
             return expect(score.calculate(rules, context)).to.eventually.rejectedWith(Error, "Unknown result '95000' for expression 'views'");
@@ -163,14 +163,14 @@ describe("Score", function() {
 
         it("should reject when wrong expression given", function() {
             rules = [{
-                condition: "views > 1",
-                if_true: {
-                    method: "add",
-                    value: null
+                "condition": "views > 1",
+                "if_true": {
+                    "method": "add",
+                    "value": null
                 },
-                if_false: {
-                    method: "idle",
-                    value: null
+                "if_false": {
+                    "method": "idle",
+                    "value": null
                 }
             }];
             return expect(score.calculate(rules, context)).to.eventually.rejectedWith(Error, "Unknown method or value");
@@ -178,14 +178,14 @@ describe("Score", function() {
 
         it("should reject when wrong expression given", function() {
             rules = [{
-                condition: "views > 1",
-                if_true: {
-                    method: "not_available",
-                    value: 10
+                "condition": "views > 1",
+                "if_true": {
+                    "method": "not_available",
+                    "value": 10
                 },
-                if_false: {
-                    method: "idle",
-                    value: null
+                "if_false": {
+                    "method": "idle",
+                    "value": null
                 }
             }];
             return expect(score.calculate(rules, context)).to.eventually.rejectedWith(Error, "Unknown method or value");

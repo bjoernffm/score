@@ -23,7 +23,9 @@ app.get("/rulesets/:rulesetId", function (req, res) {
     let context = req.body;
 
     pool.query("SELECT *  FROM `rulesets` WHERE `id` = ?", [req.params.rulesetId], function (error, results, fields) {
-        if (error) throw error;
+        if (error) {
+            res.status(500).json({ error: "INTERNAL_SERVER_ERROR" });
+        }
 
         if (results.length <= 0) {
             res.status(404).json({ error: "NOT_FOUND" });
@@ -36,9 +38,9 @@ app.get("/rulesets/:rulesetId", function (req, res) {
             let endTime = new Date();
 
             res.json({
-                request_id: id,
-                took: (endTime-startTime),
-                data: results[0]
+                "request_id": id,
+                "took": (endTime-startTime),
+                "data": results[0]
             });
         }
     });
@@ -50,7 +52,9 @@ app.post("/rulesets/:rulesetId/scores", function (req, res) {
     let context = req.body;
 
     pool.query("SELECT *  FROM `rulesets` WHERE `id` = ?", [req.params.rulesetId], function (error, results, fields) {
-        if (error) throw error;
+        if (error) {
+            res.status(500).json({ error: "INTERNAL_SERVER_ERROR" });
+        }
 
         if (results.length <= 0) {
             res.status(404).json({ error: "NOT_FOUND" });
@@ -63,10 +67,10 @@ app.post("/rulesets/:rulesetId/scores", function (req, res) {
                     let endTime = new Date();
 
                     res.json({
-                        request_id: id,
-                        took: (endTime-startTime),
-                        data: {
-                            score: score
+                        "request_id": id,
+                        "took": (endTime-startTime),
+                        "data": {
+                            "score": score
                         }
                     });
                 });
@@ -74,7 +78,7 @@ app.post("/rulesets/:rulesetId/scores", function (req, res) {
     });
 });
 
-app.listen(process.env.APP_PORT, () => console.log(`Example app listening on port ${port}!`))
+app.listen(process.env.APP_PORT, () => console.log(`Example app listening on port ${process.env.APP_PORT}!`));
 
 
 

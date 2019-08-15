@@ -2,17 +2,20 @@ const jexl = require("jexl");
 
 jexl.addTransform("lower", (val) => val.toLowerCase());
 jexl.addTransform("weeksUntilNow", (val) => {
-    return Math.floor(((new Date())-(new Date(val)))/592200000);
+    let seconds = ((new Date())-(new Date(val)))/1000;
+    let days = seconds/86400;
+    let weeks = days/7;
+    return Math.floor(weeks);
 });
 
 exports.applyMethod = function(score, method, value) {
-    if (method == "add" && typeof value == "number") {
+    if (method === "add" && typeof value === "number") {
         score += value;
-    } else if (method == "subtract" && typeof value == "number") {
+    } else if (method === "subtract" && typeof value === "number") {
         score -= value;
-    } else if (method == "multiply" &&  typeof value == "number") {
+    } else if (method === "multiply" &&  typeof value === "number") {
         score *= value;
-    } else if (method == "idle") {
+    } else if (method === "idle") {
         // do nothing
     } else {
         throw new Error("Unknown method or value");
@@ -65,4 +68,4 @@ exports.calculate = function(rules, context) {
             });
         }
     });
-}
+};
