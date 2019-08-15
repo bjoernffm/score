@@ -9,19 +9,19 @@ jexl.addTransform("weeksUntilNow", (val) => {
 });
 
 exports.applyMethod = function(score, method, value) {
-    if (method === "add" && typeof value === "number") {
-        score += value;
-    } else if (method === "subtract" && typeof value === "number") {
-        score -= value;
-    } else if (method === "multiply" &&  typeof value === "number") {
-        score *= value;
+    if (typeof value === "number") {
+        if (method === "add") {
+            return score += value;
+        } else if (method === "subtract") {
+            return score -= value;
+        } else if (method === "multiply") {
+            return score *= value;
+        }
     } else if (method === "idle") {
-        // do nothing
-    } else {
-        throw new Error("Unknown method or value");
+        return score;
     }
 
-    return score;
+    throw new Error("Unknown method or value");
 };
 
 
@@ -36,7 +36,7 @@ exports.calculate = function(rules, context) {
 
             jexl.eval(rule.condition, context).then((result) => {
                 // positive branch
-                if (result === true && rule.if_true.method != "break") {
+                if (result === true && rule.if_true.method !== "break") {
                     try {
                         score = exports.applyMethod(score, rule.if_true.method, rule.if_true.value);
                     } catch (err) {
@@ -44,7 +44,7 @@ exports.calculate = function(rules, context) {
                     }
 
                 // negative branch
-                } else if (result === false && rule.if_false.method != "break") {
+                } else if (result === false && rule.if_false.method !== "break") {
 
                     try {
                         score = exports.applyMethod(score, rule.if_false.method, rule.if_false.value);
@@ -58,11 +58,11 @@ exports.calculate = function(rules, context) {
 
                 // unknown branch
                 } else {
-                    reject(new Error("Unknown result '"+JSON.stringify(result)+"' for expression '"+rule.condition+"'"))
+                    reject(new Error("Unknown result '"+JSON.stringify(result)+"' for expression '"+rule.condition+"'"));
                 }
 
                 counter += 1;
-                if (counter == rules.length) {
+                if (counter === rules.length) {
                     resolve(score);
                 }
             });

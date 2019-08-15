@@ -70,7 +70,7 @@ app.post("/rulesets/:rulesetId/scores", function (req, res) {
                         "request_id": id,
                         "took": (endTime-startTime),
                         "data": {
-                            "score": score
+                            score
                         }
                     });
                 });

@@ -32,9 +32,6 @@ describe("Score", function() {
 
         it("shouldn't do anything if the method is 'idle'", function() {
             assert.equal(score.applyMethod(2, "idle", null), 2);
-            assert.equal(score.applyMethod(2, "idle", 0), 2);
-            assert.equal(score.applyMethod(2, "idle", -10), 2);
-            assert.equal(score.applyMethod(2, "idle", 10), 2);
         });
 
         it("should react to bad arguments", function() {
@@ -44,6 +41,7 @@ describe("Score", function() {
             expect(() => score.applyMethod(10, "add", null)).to.throw(Error, "Unknown method or value");
             expect(() => score.applyMethod(10, "add", [])).to.throw(Error, "Unknown method or value");
             expect(() => score.applyMethod(10, "lala", 0)).to.throw(Error, "Unknown method or value");
+            expect(() => score.applyMethod(10, "idle", 0)).to.throw(Error, "Unknown method or value");
         });
     });
 
