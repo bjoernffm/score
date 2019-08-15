@@ -29,20 +29,22 @@ exports.calculate = function(rules, context) {
 
         // iterate through all rules
         for(let i = 0; i < rules.length; i++) {
-            jexl.eval(rules[i].condition, context).then((result) => {
+            let rule = rules[i];
+
+            jexl.eval(rule.condition, context).then((result) => {
                 // positive branch
-                if (result === true && rules[i].if_true.method != "break") {
+                if (result === true && rule.if_true.method != "break") {
                     try {
-                        score = exports.applyMethod(score, rules[i].if_true.method, rules[i].if_true.value);
+                        score = exports.applyMethod(score, rule.if_true.method, rule.if_true.value);
                     } catch (err) {
                         reject(err);
                     }
 
                 // negative branch
-                } else if (result === false && rules[i].if_false.method != "break") {
+                } else if (result === false && rule.if_false.method != "break") {
 
                     try {
-                        score = exports.applyMethod(score, rules[i].if_false.method, rules[i].if_false.value);
+                        score = exports.applyMethod(score, rule.if_false.method, rule.if_false.value);
                     } catch (err) {
                         reject(err);
                     }
@@ -53,7 +55,7 @@ exports.calculate = function(rules, context) {
 
                 // unknown branch
                 } else {
-                    reject(new Error("Unknown result \""+JSON.stringify(result)+"\" for expression \""+rules[i].condition+"\""))
+                    reject(new Error("Unknown result \""+JSON.stringify(result)+"\" for expression \""+rule.condition+"\""))
                 }
 
                 counter += 1;
