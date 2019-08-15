@@ -1,18 +1,18 @@
-const jexl = require('jexl');
+const jexl = require("jexl");
 
-jexl.addTransform('lower', (val) => val.toLowerCase());
-jexl.addTransform('weeksUntilNow', (val) => {
+jexl.addTransform("lower", (val) => val.toLowerCase());
+jexl.addTransform("weeksUntilNow", (val) => {
     return Math.floor(((new Date())-(new Date(val)))/592200000);
 });
 
 exports.applyMethod = function(score, method, value) {
-    if (method == 'add' && typeof value == 'number') {
+    if (method == "add" && typeof value == "number") {
         score += value;
-    } else if (method == 'subtract' && typeof value == 'number') {
+    } else if (method == "subtract" && typeof value == "number") {
         score -= value;
-    } else if (method == 'multiply' &&  typeof value == 'number') {
+    } else if (method == "multiply" &&  typeof value == "number") {
         score *= value;
-    } else if (method == 'idle') {
+    } else if (method == "idle") {
         // do nothing
     } else {
         throw new Error("Unknown method or value");
@@ -55,7 +55,7 @@ exports.calculate = function(rules, context) {
 
                 // unknown branch
                 } else {
-                    reject(new Error("Unknown result \""+JSON.stringify(result)+"\" for expression \""+rule.condition+"\""))
+                    reject(new Error("Unknown result '"+JSON.stringify(result)+"' for expression '"+rule.condition+"'"))
                 }
 
                 counter += 1;

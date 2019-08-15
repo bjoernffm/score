@@ -1,14 +1,14 @@
-require('dotenv').config();
+require("dotenv").config();
 
-const score = require('./score.js');
-const uuidv4 = require('uuid/v4');
-const express = require('express');
+const score = require("./score.js");
+const uuidv4 = require("uuid/v4");
+const express = require("express");
 const app = express();
 
-let bodyParser = require('body-parser');
+let bodyParser = require("body-parser");
 app.use(bodyParser.json());
 
-let mysql = require('mysql');
+let mysql = require("mysql");
 let pool  = mysql.createPool({
     connectionLimit: 10,
     host: process.env.DB_HOST,
@@ -17,7 +17,7 @@ let pool  = mysql.createPool({
     database: process.env.DB_DATABASE
 });
 
-app.get('/rulesets/:rulesetId', function (req, res) {
+app.get("/rulesets/:rulesetId", function (req, res) {
     let startTime = new Date();
 
     let context = req.body;
@@ -26,7 +26,7 @@ app.get('/rulesets/:rulesetId', function (req, res) {
         if (error) throw error;
 
         if (results.length <= 0) {
-            res.status(404).json({ error: 'NOT_FOUND' });
+            res.status(404).json({ error: "NOT_FOUND" });
         } else {
             results[0].rules = JSON.parse(results[0].rules);
             delete results[0].deleted_at;
@@ -44,7 +44,7 @@ app.get('/rulesets/:rulesetId', function (req, res) {
     });
 });
 
-app.post('/rulesets/:rulesetId/scores', function (req, res) {
+app.post("/rulesets/:rulesetId/scores", function (req, res) {
     let startTime = new Date();
 
     let context = req.body;
@@ -53,7 +53,7 @@ app.post('/rulesets/:rulesetId/scores', function (req, res) {
         if (error) throw error;
 
         if (results.length <= 0) {
-            res.status(404).json({ error: 'NOT_FOUND' });
+            res.status(404).json({ error: "NOT_FOUND" });
         } else {
             let rules = JSON.parse(results[0].rules);
 
