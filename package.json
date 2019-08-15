@@ -1,5 +1,5 @@
 {
-  "name": "Score",
+  "name": "score",
   "version": "0.1.0",
   "description": "A minimal application to provide a rest api for scoring data",
   "main": "index.js",
@@ -21,5 +21,19 @@
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "mocha": "^6.2.0"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bjoernffm/score.git"
+  },
+  "keywords": [
+    "score"
+  ],
+  "bugs": {
+    "url": "https://github.com/bjoernffm/score/issues"
+  },
+  "homepage": "https://github.com/bjoernffm/score#readme"
 }
