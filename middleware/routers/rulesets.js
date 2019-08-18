@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Schema = require('validate');
+const Schema = require("validate");
 
 let mysql = require("mysql");
 let pool  = mysql.createPool({
@@ -73,9 +73,6 @@ router.get("/:rulesetId", (req, res) => {
             delete results[0].deleted_at;
             delete results[0].user_id;
 
-            let id = uuidv4();
-            let endTime = new Date();
-
             res.json({
                 "request_id": req.id,
                 "took": ((new Date())-req.startTime),
@@ -86,11 +83,6 @@ router.get("/:rulesetId", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-    let errors = ruleset.validate(req.body);
-
-    console.log(errors);
-    res.json(errors);
-
     /*pool.query("SELECT *  FROM `rulesets` WHERE `id` = ? AND `user_id` = ? AND `deleted_at` IS NULL", [req.params.rulesetId, req.jwt.user_id], function (error, results, fields) {
         if (error) {
             res.status(500).json({ error: "INTERNAL_SERVER_ERROR" });
@@ -102,9 +94,6 @@ router.post("/", (req, res) => {
             results[0].rules = JSON.parse(results[0].rules);
             delete results[0].deleted_at;
             delete results[0].user_id;
-
-            let id = uuidv4();
-            let endTime = new Date();
 
             res.json({
                 "request_id": req.id,

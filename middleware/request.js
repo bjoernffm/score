@@ -15,14 +15,14 @@ jwt.sign({ user_id: 1 }, privateKey, { algorithm: "RS256" }, function(err, token
 
 let checkJWT = function(request) {
     return new Promise((resolve, reject) => {
-        if (request.get("Authorization") !== undefined) {
+        if (request.get("Authorization")) {
             let token = request.get("Authorization").split(" ");
 
-            if (token.length == 2 && token[0] == "Bearer") {
+            if (token.length === 2 && token[0] === "Bearer") {
                 const cert = fs.readFileSync(".keys/public.pem");  // get public key
                 jwt.verify(token[1], cert, { algorithms: ["RS256"] }, (jwtError, jwtDecoded) => {
 
-                    if (jwtError === null && jwtDecoded !== undefined) {
+                    if (!jwtError && jwtDecoded !== undefined) {
                         resolve(jwtDecoded);
                     } else {
                         reject(new Error("Bearer token not acceptable"));

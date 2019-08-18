@@ -1,4 +1,4 @@
-const score = require("../score.js");
+const score = require("../../score.js");
 const express = require("express");
 const router = express.Router();
 
